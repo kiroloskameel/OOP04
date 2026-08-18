@@ -21,6 +21,54 @@
             //لا، لا يمكن للكلاس أن يرث إلا من كلاس مجرد واحد فقط (Single Inheritance)
             //نعم، يمكن للكلاس أن يطبق (Implement) أكثر من Interface بنفس الوقت دون أي مشكلة
             #endregion
+
+            #region Practical
+            DeliveryCenter center = new DeliveryCenter("Main Center");
+
+            StandardShipment std = new StandardShipment("SH001", "Laptop", 3, 80, new DeliveryAddress("Street 1", "Cairo"));
+            ExpressShipment exp = new ExpressShipment("SH002", "Mobile Phone", 2, 60, new DeliveryAddress("Street 2", "Giza"), 30);
+            InternationalShipment inter = new InternationalShipment("SH003", "Television", 8, 120, new DeliveryAddress("Street 3", "Berlin"), "Germany", 100);
+
+            center.AddShipment(std);
+            center.AddShipment(exp);
+            center.AddShipment(inter);
+
+            center.PrintAllShipments();
+
+            Console.WriteLine("==========================================");
+            Console.WriteLine("Tracking Status");
+            Console.WriteLine("==========================================");
+            DeliveryReport.PrintShipment(std);
+            DeliveryReport.PrintShipment(exp);
+            DeliveryReport.PrintShipment(inter);
+
+            Console.WriteLine("==========================================");
+            Console.WriteLine("Insurance");
+            Console.WriteLine("==========================================");
+            DeliveryReport.PrintInsurance(std);
+            DeliveryReport.PrintInsurance(exp);
+            DeliveryReport.PrintInsurance(inter);
+
+            Console.WriteLine("\nTesting ITrackable[] Array Polymorphism:");
+            ITrackable[] trackables = new ITrackable[] { std, exp, inter };
+            foreach (var item in trackables)
+            {
+                Console.WriteLine(item.GetTrackingStatus());
+            }
+
+            Console.WriteLine("\nTesting IInsurable[] Array Polymorphism:");
+            IInsurable[] insurables = new IInsurable[] { std, exp, inter };
+            foreach (var item in insurables)
+            {
+                Console.WriteLine($"Insurance: {item.CalculateInsurance():0.00} EGP");
+            }
+
+            Console.WriteLine("==========================================");
+            Console.WriteLine("Interface Polymorphism Demonstrated Successfully.");
+
+            Console.ReadKey();
+            #endregion
+
         }
     }
 }
